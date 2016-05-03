@@ -10,21 +10,10 @@ class Message:
         f = open(fname,"r")
         text = f.read()
         self.mail = email.message_from_string(text)
-        self.From = self.mail.get("From")
-        if(self.From != None):
-            m = re.search(r"<([^>]*)>",self.From)
-            if(m != None):
-                self.From = m.group(1)
-            else:
-                self.From = None
-        self.To = self.mail.get("To")
-        if(self.To != None):
-            m = re.search(r"<([^>]*)>",self.To)
-            if(m != None):
-                self.To = m.group(1)
-            else:
-                self.To = None
-        self.Date = self.mail.get("Date")
+        self.From = email.utils.parseaddr(self.mail.get("From"))[1]
+
+        self.To = email.utils.parseaddr(self.mail.get("To"))[1]
+        self.Date = email.utils.parsedate(self.mail.get("Date"))
         self.Subject = self.mail.get("Subject")
         for i in self.mail.get_all("Received"):
             m = re.search(r"by ([^( )]*) \(",i)
@@ -33,8 +22,10 @@ class Message:
                 self.Received.append((m.group(1),m2.group(1)))
 
     def __str__(self):
-        s = ""
-        return "From: "+str(self.From)+"\nTo: "+str(self.To)+"\nDate: "+str(self.Date)+"\nSubject: "+str(self.Subject)+"\n"
+        s = "Received: "
+        for i in self.Received[::-1]:
+            s+=">>> "+i[0]+" "+i[1]+"\n"
+        return "From: "+str(self.From)+"\nTo: "+str(self.To)+"\nDate: "+str(self.Date)+"\nSubject: "+str(self.Subject)+"\n"+s
 
 if __name__ == "__main__" :
     m = Message("Messages/183000.emlx")
