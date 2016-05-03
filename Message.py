@@ -14,7 +14,7 @@ class Message:
         self.From = email.utils.parseaddr(self.mail.get("From"))[1]
 
         self.To = email.utils.parseaddr(self.mail.get("To"))[1]
-        self.Date = email.utils.parsedate(self.mail.get("Date"))
+        self.Date = self.mail.get("Date")
         self.Subject = self.mail.get("Subject")
         for i in self.mail.get_all("Received"):
             m = re.search(r"by ([^( )]*) \(",i)
