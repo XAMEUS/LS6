@@ -14,8 +14,11 @@ class Mailbox:
         for msg in load(path):
             self.msg_list.append(Message(msg))
 
+    def __iter__(self):
+        return iter(self.msg_list)
+
 if __name__ == "__main__":
     mb = Mailbox("Messages")
     print(mb.msg_list)
-    for msg in mb.msg_list:
+    for msg in mb:
         print(msg)
