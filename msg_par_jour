@@ -1,0 +1,20 @@
+#!/usr/bin/python3
+
+import sys
+import email
+import datetime
+from Mailbox import Mailbox
+
+mb = Mailbox(sys.argv[1])
+t = [0, 0, 0, 0, 0, 0, 0]
+for m in mb:
+    date = email.utils.parsedate(m.Date)
+    d = datetime.datetime(date[0], date[1], date[2], date[3], date[4], date[5])
+    t[d.weekday()] += 1
+print("lundi: " + str(t[0]))
+print("mardi: " + str(t[1]))
+print("mercredi: " + str(t[2]))
+print("jeudi: " + str(t[3]))
+print("vendredi: " + str(t[4]))
+print("samedi: " + str(t[5]))
+print("dimanche: " + str(t[6]))

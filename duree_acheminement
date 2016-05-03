@@ -1,0 +1,10 @@
+#!/usr/bin/python3
+
+import sys
+import email
+from Message import Message
+
+m = Message(sys.argv[1])
+date0 = email.utils.parsedate_tz(m.Date)
+date1 = email.utils.parsedate_tz(m.Received[0][1])
+print(email.utils.mktime_tz(date1) - email.utils.mktime_tz(date0))

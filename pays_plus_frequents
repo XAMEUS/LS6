@@ -1,0 +1,17 @@
+#!/usr/bin/python3
+
+import sys
+import operator
+from Mailbox import Mailbox
+
+mb = Mailbox(sys.argv[1])
+d = {}
+for m in mb:
+    pays = m.From.split("@")[1].split(".")[-1]
+    if not pays in d:
+        d[pays] = 1
+    else:
+        d[pays] += 1
+t = [p[0] for p in sorted(d.items(), key=operator.itemgetter(1), reverse=True)][:int(sys.argv[2])]
+for e in t:
+    print(e)
