@@ -1,6 +1,21 @@
 #!/usr/bin/python3
 
 import sys
+import email
 from Mailbox import Mailbox
 
-print("TODO")
+mailbox = Mailbox(sys.argv[1])
+
+msg = None
+maxsec = 0
+
+for m in mailbox:
+    date0 = email.utils.parsedate_tz(m.Date)
+    date1 = email.utils.parsedate_tz(m.Received[0][1])
+    seconds = email.utils.mktime_tz(date1) - email.utils.mktime_tz(date0)
+    if(seconds > maxsec):
+        maxsec = seconds
+        msg = m
+
+print(msg)
+print(maxsec)
