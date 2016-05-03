@@ -12,10 +12,18 @@ class Message:
         self.mail = email.message_from_string(text)
         self.From = self.mail.get("From")
         if(self.From != None):
-            self.From = re.search(r"<([^>]*)>",self.From).group(1);
+            m = re.search(r"<([^>]*)>",self.From)
+            if(m != None):
+                self.From = m.group(1)
+            else:
+                self.From = None
         self.To = self.mail.get("To")
         if(self.To != None):
-            self.To = re.search(r"<([^>]*)>",self.To).group(1);
+            m = re.search(r"<([^>]*)>",self.To)
+            if(m != None):
+                self.To = m.group(1)
+            else:
+                self.To = None
         self.Date = self.mail.get("Date")
         self.Subject = self.mail.get("Subject")
         for i in self.mail.get_all("Received"):
@@ -30,3 +38,4 @@ class Message:
 
 if __name__ == "__main__" :
     m = Message("Messages/183000.emlx")
+    print(m)
