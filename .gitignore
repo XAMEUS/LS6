@@ -62,5 +62,6 @@ target/
 .ipynb_checkpoints
 
 Messages/
+Archive/
 projet.pdf
 test.py

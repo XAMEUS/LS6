@@ -5,7 +5,8 @@ import re;
 class Message:
 
     def __init__(self,fname):
-        self.name = fname
+        self.name = fname.split("/")[-1]
+        self.path = fname
         self.Received = []
         f = open(fname,"r")
         text = f.read()
